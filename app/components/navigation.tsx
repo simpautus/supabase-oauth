@@ -1,8 +1,10 @@
 import { NavLink } from "@remix-run/react";
 import type { User } from "@supabase/supabase-js";
-import supabase from "~/utils/supabase";
+import { useSignOut } from "~/utils/use-sign-out";
 
 const Navigation = ({ user }: { user: User | null }) => {
+  const { signOut } = useSignOut();
+
   return (
     <nav className="mb-10 flex justify-between bg-white px-2 py-4 shadow-md md:px-8">
       <div className="navbar-brand">
@@ -26,7 +28,7 @@ const Navigation = ({ user }: { user: User | null }) => {
             {user ? (
               <div
                 className="transition-color flex cursor-pointer gap-2 rounded-sm bg-gray-700 px-4 py-2 text-white duration-200 hover:bg-gray-800 md:px-6"
-                onClick={() => supabase.auth.signOut()}
+                onClick={signOut}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

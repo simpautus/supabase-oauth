@@ -17,6 +17,8 @@ import { useEffect } from "react";
 import styles from "./styles/app.css";
 import supabase from "./utils/supabase";
 
+// import { useSignInCallback } from "./utils/use-sign-in-callback";
+
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
@@ -38,8 +40,13 @@ export const loader = () => {
 export default function App() {
   const { windowEnv } = useLoaderData<LoaderData>();
 
-  const fetcher = useFetcher();
+  // Sign in with credentials from window.location.hash
+  // Uncomment to use and comment out useEffect below
+  // useSignInCallback();
 
+  // Sign in with onAuthStateChange subscription
+  // Uncomment to use and comment out useSignInCallback hook above
+  const fetcher = useFetcher();
   useEffect(() => {
     const {
       data: { subscription: listener },
@@ -58,10 +65,11 @@ export default function App() {
         );
       }
       if (event === "SIGNED_OUT") {
-        fetcher.submit(null, {
-          method: "post",
-          action: "/api/auth/logout",
-        });
+        // Already posted by useSignOut hook
+        // fetcher.submit(null, {
+        //   method: "post",
+        //   action: "/api/auth/logout",
+        // });
       }
     });
 

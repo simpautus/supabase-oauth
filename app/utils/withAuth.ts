@@ -1,11 +1,9 @@
 import type {
   ActionFunction,
   DataFunctionArgs,
-  LoaderFunction
+  LoaderFunction,
 } from "@remix-run/node";
-import {
-  redirect,
-} from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 
 import { getSession } from "./session";
@@ -25,20 +23,24 @@ const withAuth =
     { required = true }: { required?: boolean } = {}
   ) =>
   async (context: DataFunctionArgs) => {
-
     const session = await getSession(context.request.headers.get("Cookie"));
 
     const accessToken = session.get("accessToken");
     const refreshToken = session.get("refreshToken");
 
-    const { data: { user } } = await supabase.auth.getUser(accessToken)
+    const {
+      data: { user },
+    } = await supabase.auth.getUser(accessToken);
 
     if (!user && required) {
       return redirect("/login");
     }
 
     if (user) {
-      supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
+      supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken,
+      });
     }
 
     return fn({
