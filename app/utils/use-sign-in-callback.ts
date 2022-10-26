@@ -48,7 +48,7 @@ function getCredentials(location: Location): SignInResult {
 
 export function useSignInCallback() {
   const location = useLocation();
-  const fetcher = useFetcher();
+  const { submit } = useFetcher();
 
   const [handled, setHandled] = useState(false);
 
@@ -56,7 +56,7 @@ export function useSignInCallback() {
     if (!handled) {
       const { success, accessToken, refreshToken } = getCredentials(location);
       if (success) {
-        fetcher.submit(
+        submit(
           {
             accessToken,
             refreshToken,
@@ -69,5 +69,5 @@ export function useSignInCallback() {
       }
     }
     setHandled(true);
-  }, [fetcher, location, handled]);
+  }, [submit, location, handled]);
 }

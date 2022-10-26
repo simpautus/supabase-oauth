@@ -2,12 +2,12 @@ import { useFetcher } from "@remix-run/react";
 import supabase from "~/utils/supabase";
 
 export function useSignOut() {
-  const fetcher = useFetcher();
+  const { submit } = useFetcher();
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) console.log({ error });
-    fetcher.submit(
+    submit(
       {},
       {
         method: "post",

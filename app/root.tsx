@@ -46,14 +46,14 @@ export default function App() {
 
   // Sign in with onAuthStateChange subscription
   // Uncomment to use and comment out useSignInCallback hook above
-  const fetcher = useFetcher();
+  const { submit } = useFetcher();
   useEffect(() => {
     const {
       data: { subscription: listener },
     } = supabase.auth.onAuthStateChange((event, session) => {
       console.log({ event });
       if (event === "SIGNED_IN" && session?.access_token) {
-        fetcher.submit(
+        submit(
           {
             accessToken: session.access_token,
             refreshToken: session.refresh_token,
@@ -66,7 +66,7 @@ export default function App() {
       }
       if (event === "SIGNED_OUT") {
         // Already posted by useSignOut hook
-        // fetcher.submit(null, {
+        // submit(null, {
         //   method: "post",
         //   action: "/api/auth/logout",
         // });
@@ -76,7 +76,7 @@ export default function App() {
     return () => {
       listener?.unsubscribe();
     };
-  }, [fetcher]);
+  }, [submit]);
 
   return (
     <html lang="en">
