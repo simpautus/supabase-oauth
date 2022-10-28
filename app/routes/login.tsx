@@ -1,5 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { Link } from "@remix-run/react";
 import { getUser } from "~/utils/session";
 import { useSignIn } from "~/utils/use-sign-in";
 
@@ -13,7 +14,10 @@ const Login = () => {
   const { handleProviderSignIn } = useSignIn();
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-gray-100">
+    <div
+      className="flex flex-col min-h-screen w-full items-center justify-center bg-gray-100 gap-y-8
+    "
+    >
       <button
         className="transition-color flex items-center rounded-sm bg-gray-700 px-6 py-3 text-base text-white duration-200 hover:bg-gray-800"
         onClick={() => handleProviderSignIn("github")}
@@ -30,6 +34,9 @@ const Login = () => {
         </svg>
         Login with GitHub
       </button>
+      <Link to="/" className="text-xs font-light underline">
+        Back Home
+      </Link>
     </div>
   );
 };
