@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { getUser } from "~/utils/session";
-import supabase from "~/utils/supabase";
+import { useSignIn } from "~/utils/use-sign-in";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
@@ -10,19 +10,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 const Login = () => {
-  const handleSignIn = async () => {
-    const resp = await supabase.auth.signInWithOAuth({
-      provider: "github",
-    });
-
-    console.log({ resp });
-  };
+  const { handleProviderSignIn } = useSignIn();
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-gray-100">
       <button
         className="transition-color flex items-center rounded-sm bg-gray-700 px-6 py-3 text-base text-white duration-200 hover:bg-gray-800"
-        onClick={handleSignIn}
+        onClick={() => handleProviderSignIn("github")}
       >
         <svg
           className="mr-3 h-6 text-white"

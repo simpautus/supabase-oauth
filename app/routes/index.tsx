@@ -4,8 +4,6 @@ import { Link, useLoaderData } from "@remix-run/react";
 import type { User } from "@supabase/supabase-js";
 import Navigation from "~/components/navigation";
 import { getUser } from "~/utils/session";
-// import supabase from "~/utils/supabase";
-// import withAuth from "~/utils/withAuth";
 
 type LoaderData = {
   user: User | null;
@@ -17,36 +15,6 @@ type LoaderData = {
   }[];
   subscriptionTier: "FREE" | "STANDARD" | "PREMIUM";
 };
-
-// export const loader = withAuth(
-//   async ({ user, supabaseClient }) => {
-//     const unsortedPlans = [
-//       {
-//         id: '101',
-//         name: 'Product 1',
-//         price: 100,
-//         currency: 'USD',
-//       },
-//       {
-//         id: '102',
-//         name: 'Product 2',
-//         price: 200,
-//         currency: 'USD',
-//       },
-//       {
-//         id: '103',
-//         name: 'Product 3',
-//         price: 300,
-//         currency: 'USD',
-//       },
-//     ]
-
-//     const plans = unsortedPlans.sort((a, b) => a.price - b.price)
-
-//     return { plans, subscriptionTier: 'FREE' }
-//   },
-//   { required: false }
-// )
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);

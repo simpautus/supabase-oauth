@@ -1,5 +1,5 @@
 import type { ActionFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { commitSession, getSession } from "~/utils/session";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -17,13 +17,9 @@ export const action: ActionFunction = async ({ request }) => {
   // commit our session
   const cookieString = await commitSession(session);
 
-  // return headers to set cookie
-  return json(
-    {},
-    {
-      headers: {
-        "Set-Cookie": cookieString,
-      },
-    }
-  );
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": cookieString,
+    },
+  });
 };

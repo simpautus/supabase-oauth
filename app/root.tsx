@@ -7,17 +7,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useFetcher,
   useLoaderData,
 } from "@remix-run/react";
 import type { WindowEnvironment } from "~/utils/env.server";
 import { windowEnv } from "~/utils/env.server";
-import { useEffect } from "react";
 
 import styles from "./styles/app.css";
-import supabase from "./utils/supabase";
-
-// import { useSignInCallback } from "./utils/use-sign-in-callback";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -40,43 +35,22 @@ export const loader = () => {
 export default function App() {
   const { windowEnv } = useLoaderData<LoaderData>();
 
-  // Sign in with credentials from window.location.hash
-  // Uncomment to use and comment out useEffect below
-  // useSignInCallback();
+  /**
+   * This is moved to '/api/auth/callback' where
+   * successful OAuth login is redirected
 
-  // Sign in with onAuthStateChange subscription
-  // Uncomment to use and comment out useSignInCallback hook above
-  const { submit } = useFetcher();
-  useEffect(() => {
-    const {
-      data: { subscription: listener },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log({ event });
-      if (event === "SIGNED_IN" && session?.access_token) {
-        submit(
-          {
-            accessToken: session.access_token,
-            refreshToken: session.refresh_token,
-          },
-          {
-            method: "post",
-            action: "/api/auth/login",
-          }
-        );
-      }
-      if (event === "SIGNED_OUT") {
-        // Already posted by useSignOut hook
-        // submit(null, {
-        //   method: "post",
-        //   action: "/api/auth/logout",
-        // });
-      }
-    });
 
-    return () => {
-      listener?.unsubscribe();
-    };
-  }, [submit]);
+  // // Sign in with credentials from window.location.hash
+  // // Uncomment to use and comment out useEffect below
+  // const { useOnSignInCallBack } = useSignIn();
+  // useOnSignInCallBack();
+
+  // // Sign in with onAuthStateChange subscription
+  // // Uncomment to use and comment out useSignInCallback hook above
+  // const { useOnAuthStateChange } = useSignIn();
+  // useOnAuthStateChange();
+
+  */
 
   return (
     <html lang="en">
