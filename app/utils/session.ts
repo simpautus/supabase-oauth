@@ -7,11 +7,11 @@ const { getSession, commitSession, destroySession } =
   createCookieSessionStorage({
     cookie: {
       name: "sb:token",
-      maxAge: 60 * 59,
+      maxAge: 604_800,
       path: "/",
       sameSite: "lax",
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV !== 'production',
       secrets: ["supabase is the dopest!"],
     },
   });

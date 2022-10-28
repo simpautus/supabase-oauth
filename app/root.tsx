@@ -43,7 +43,6 @@ export default function App() {
    * This is moved to '/api/auth/callback' where
    * successful OAuth login is redirected
 
-
   // // Sign in with credentials from window.location.hash
   // // Uncomment to use and comment out useEffect below
   // const { useOnSignInCallBack } = useSignIn();
