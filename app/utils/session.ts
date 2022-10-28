@@ -23,6 +23,8 @@ export const getUser = async (request: Request): Promise<User | null> => {
 
   const accessToken = session.get("accessToken");
 
+  if (!accessToken) return null;
+
   const {
     data: { user },
   } = await supabase.auth.getUser(accessToken);

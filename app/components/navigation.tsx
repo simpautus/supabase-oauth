@@ -4,6 +4,7 @@ import { useSignOut } from "~/utils/use-sign-out";
 
 const Navigation = ({ user }: { user: User | null }) => {
   const { signOut } = useSignOut();
+  console.log({ user });
 
   return (
     <nav className="mb-10 flex justify-between bg-white px-2 py-4 shadow-md md:px-8">

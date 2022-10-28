@@ -5,6 +5,7 @@ import { useSignIn } from "~/utils/use-sign-in";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
+  console.log({ user });
   if (user) return redirect("/");
   return null;
 };

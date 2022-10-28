@@ -19,8 +19,6 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request);
 
-  // console.log({ user });
-
   const unsortedPlans = [
     {
       id: "101",

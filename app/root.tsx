@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -9,10 +9,12 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import type { User } from "@supabase/supabase-js";
 import type { WindowEnvironment } from "~/utils/env.server";
 import { windowEnv } from "~/utils/env.server";
 
 import styles from "./styles/app.css";
+import { getUser } from "./utils/session";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -24,16 +26,18 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-type LoaderData = {
+export type RootLoaderData = {
   windowEnv: WindowEnvironment;
+  user: User | null;
 };
 
-export const loader = () => {
-  return json<LoaderData>({ windowEnv });
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request);
+  return json<RootLoaderData>({ windowEnv, user });
 };
 
 export default function App() {
-  const { windowEnv } = useLoaderData<LoaderData>();
+  const { windowEnv } = useLoaderData<RootLoaderData>();
 
   /**
    * This is moved to '/api/auth/callback' where
